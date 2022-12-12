@@ -14,6 +14,10 @@ https://www.npmjs.com/package/@mostfeatured/dbi
 
 Users appreciate release notes as you update your extension.
 
+### 0.0.3
+
+* Better downloading modules on setup
+
 ### 0.0.2
 
 * Better Read Me

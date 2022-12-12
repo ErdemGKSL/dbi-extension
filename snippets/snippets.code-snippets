@@ -17,9 +17,9 @@
       "  name: \"$1\",",
       "  description: \"$2\",",
       "  async onExecute({ interaction, $3 }) {",
-      "    $4",
+      "    $5",
       "  },",
-      "  options: [$5],",
+      "  options: [$4],",
       "});"
     ],
   },
@@ -28,12 +28,12 @@
     "body": [
       "Button({",
       "  name: \"$1\",",
-      "  async onExecute({ interaction, $3 }) {",
+      "  async onExecute({ interaction, $2 }) {",
       "    $4",
       "  },",
       "  options: {",
       "    style: ButtonStyle$6.Primary,",
-      "    label: \"$5\"",
+      "    label: \"$3\"",
       "  },",
       "});"
     ],

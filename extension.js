@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const { exec } = require('child_process');
+const execAsync = require('util').promisify(exec);
 const fs = require('fs/promises');
 const path = require('path');
 const { request } = require('https');
@@ -12,13 +13,6 @@ const { request } = require('https');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "dbi" is now active!');
-
-	vscode.SnippetTextEdit
-
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
@@ -41,17 +35,14 @@ function activate(context) {
 				await fs.writeFile(nPath, await fetch(nURL), 'utf-8');
 			}
 
-			exec('npm i', { cwd: current_path }, (err) => {
-				if (!err) {
-					vscode.window.showInformationMessage("done");
-				} else {
-					throw Error("400");
-				}
-			});
+			await execAsync('npm i', { cwd: current_path });
+			await execAsync('npm i @mostfeatured/dbi@latest discord.js@latest', { cwd: current_path });
+
+			vscode.window.showInformationMessage("DBI: Setup completed successfully!");
 
 		} catch (error) {
-			vscode.window.showInformationMessage("Something went wrong, please open a workspace if you didn't already.");
-			vscode.window.showInformationMessage(error.toString());
+			vscode.window.showInformationMessage("DBI: Something went wrong, please open a workspace if you didn't already.");
+			vscode.window.showErrorMessage(error.toString());
 		}
 	});
 
@@ -65,6 +56,7 @@ module.exports = {
 	activate,
 	deactivate
 }
+
 function fetch(params, postData) {
 	return new Promise(function (resolve, reject) {
 		var req = request(params, function (res) {
