@@ -1,0 +1,47 @@
+{
+  "DBI: Register": {
+    "prefix": "!dbi-register",
+    "body": [
+      "dbi$1.register(({ $2 }) => {",
+      "",
+      "$3",
+      "",
+      "});"
+    ],
+    "description": "Create example registery"
+  },
+  "DBI: ChatInput": {
+    "prefix": "!dbi-chatinput",
+    "body": [
+      "ChatInput({",
+      "  name: \"$1\",",
+      "  description: \"$2\",",
+      "  async onExecute({ interaction, $3 }) {",
+      "    $4",
+      "  },",
+      "  options: [$5],",
+      "});"
+    ],
+  },
+  "DBI: Button": {
+    "prefix": "!dbi-button",
+    "body": [
+      "Button({",
+      "  name: \"$1\",",
+      "  async onExecute({ interaction, $3 }) {",
+      "    $4",
+      "  },",
+      "  options: {",
+      "    style: ButtonStyle$6.Primary,",
+      "    label: \"$5\"",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: ChatInputOptions": {
+    "prefix": "!dbi-chatinputoptions",
+    "body": [
+      "ChatInputOptions: { $1 },",
+    ],
+  }
+}
