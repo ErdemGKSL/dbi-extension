@@ -2,7 +2,7 @@
   "name": "dbiaddon",
   "displayName": "DBI Addon",
   "description": "DBI Npm Module's Addon for snippets and setup.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "icon": "icon.png",
   "engines": {
     "vscode": "^1.74.0"

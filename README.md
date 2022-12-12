@@ -14,11 +14,11 @@ https://www.npmjs.com/package/@mostfeatured/dbi
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.1
+### 0.0.2
 
 * Better Read Me
 * Icon
 
-### 1.0.0
+### 0.0.1
 
 * Initial release of dbi
