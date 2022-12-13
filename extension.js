@@ -27,11 +27,9 @@ function activate(context) {
 						else return;
 					}
 				};
-				vscode.window.showInformationMessage(registerLine.toString());
 				if (registerLine == -1) { return; }
 				let content = document.getText();
 				let [registerContent] = document.lineAt(registerLine).text.match(/\.register\(\(\{[^)]*\}\)/);
-				vscode.window.showInformationMessage(registerContent.toString());
 				if (registerContent.includes("ChatInputOptions:")) return;
 				content = content.replace(registerContent, "~;REGISTERY~CONTENT~TEMPORARY;~");
 				const contentRegisterElements = registerElements.filter((element) => content.match(new RegExp(`[ \\n;]${element}\\b`)));

@@ -2,6 +2,10 @@
 
 ## [Released]
 
+### 0.0.8
+
+* Bug Fix
+
 ### 0.0.7
 
 * Bug Fix
