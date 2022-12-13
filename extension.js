@@ -34,7 +34,7 @@ function activate(context) {
 				vscode.window.showInformationMessage(registerContent.toString());
 				if (registerContent.includes("ChatInputOptions:")) return;
 				content = content.replace(registerContent, "~;REGISTERY~CONTENT~TEMPORARY;~");
-				const contentRegisterElements = registerElements.filter((element) => content.includes(element));
+				const contentRegisterElements = registerElements.filter((element) => content.match(new RegExp(`[ \\n;]${element}\\b`)));
 				content = content.replace("~;REGISTERY~CONTENT~TEMPORARY;~", `.register(({ ${contentRegisterElements.join(", ")} })`);
 				await document.save();
 				setTimeout(async () => {
@@ -62,7 +62,7 @@ function activate(context) {
 				return undefined;
 			}
 
-			const currentRegisterElements = registerElements.filter((element) => !document.lineAt(registerLine).text.includes(element));
+			const currentRegisterElements = registerElements.filter((element) => !document.lineAt(registerLine).text.match(new RegExp(`[, {]${element}[, }]`)));
 
 			if (!currentRegisterElements.length) return undefined;
 			let myitem = (text, registerElement) => {

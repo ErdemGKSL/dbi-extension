@@ -2,6 +2,14 @@
 
 ## [Released]
 
+### 0.0.7
+
+* Bug Fix
+
+### 0.0.6
+
+* Bug Fix
+
 ### 0.0.5
 
 * Now you can import registirations from snippets via ctrl + space at the end of the register elements name!
