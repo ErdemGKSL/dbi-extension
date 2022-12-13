@@ -43,5 +43,94 @@
     "body": [
       "ChatInputOptions: { $1 },",
     ],
-  }
+  },
+  "DBI: InteractionLocale": {
+    "prefix": "!dbi-interactionlocale",
+    "body": [
+      "InteractionLocale({",
+      "  name: \"$1\",",
+      "  data: {",
+      "    $2: {",
+      "      name: \"$3\"",
+      "      description: \"$4\"",
+      "    },",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: Locale": {
+    "prefix": "!dbi-locale",
+    "body": [
+      "Locale({",
+      "  name: \"$1\",",
+      "  data: {",
+      "    $2",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: Modal": {
+    "prefix": "!dbi-modal",
+    "body": [
+      "Modal({",
+      "  name: \"$1\",",
+      "  async onExecute({ interaction, $2 }) {",
+      "    $4",
+      "  },",
+      "  options: {",
+      "    title: \"$3\",",
+      "    components: []",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: SelectMenu": {
+    "prefix": "!dbi-selectmenu",
+    "body": [
+      "SelectMenu({",
+      "  name: \"$1\",",
+      "  async onExecute({ interaction, $2 }) {",
+      "    $4",
+      "  },",
+      "  options: {",
+      "    placeholder: \"$3\",",
+      "    options: []",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: MessageContextMenu": {
+    "prefix": "!dbi-messagecontextmenu",
+    "body": [
+      "MessageContextMenu({",
+      "  name: \"$1\",",
+      "  async onExecute({ interaction, $2 }) {",
+      "    $3",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: UserContextMenu": {
+    "prefix": "!dbi-usercontextmenu",
+    "body": [
+      "UserContextMenu({",
+      "  name: \"$1\",",
+      "  async onExecute({ interaction, $2 }) {",
+      "    $3",
+      "  },",
+      "});"
+    ],
+  },
+  "DBI: Event": {
+    "prefix": "!dbi-event",
+    "body": [
+      "Event({",
+      "  name: \"$1\",",
+      "  id: \"$2\",",
+      "  async onExecute({ $2 }) {",
+      "    $3",
+      "  },",
+      "});"
+    ],
+  },
 }

@@ -8,11 +8,58 @@ const path = require('path');
 const { request } = require('https');
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-
+const registerElements = ["ChatInput"]
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
+
+	// let disposable2 = vscode.languages.registerCompletionItemProvider("javascript", {
+	// 	resolveCompletionItem(item, token) {
+	// 		return item;
+	// 	},
+
+	// 	provideCompletionItems(document, position, token, context) {
+	// 		vscode.window.showInformationMessage("test");
+	// 		const linePrefix = document.lineAt(position).text.substring(0, position.character);
+	// 		let registerLine = -1;
+	// 		let registerCharPosition = -1;
+	// 		for (let i = 0; i < document.lineCount; i++) {
+	// 			if (document.lineAt(i).text.includes(".register({")) {
+	// 				registerLine = i;
+	// 				registerCharPosition = document.lineAt(i).text.indexOf(".register({") + 11;
+	// 				break;
+	// 			}
+	// 		}
+	// 		vscode.window.showInformationMessage(registerLine.toString());
+	// 		if (registerLine == -1) {
+	// 			return undefined;
+	// 		}
+
+	// 		const registerElement = registerElements.find((element) => linePrefix.endsWith(`${element.toLowerCase()}`));
+	// 		vscode.window.showInformationMessage(registerElement);
+	// 		if (!registerElement) {
+	// 			return undefined;
+	// 		}
+	// 		let myitem = (text) => {
+	// 			let item = new vscode.CompletionItem(text, vscode.CompletionItemKind.Variable);
+	// 			if (!document.lineAt(registerLine).text.includes(registerElement))
+	// 				item.additionalTextEdits = [
+	// 					new vscode.TextEdit(
+	// 						new vscode.Range(
+	// 							new vscode.Position(registerLine, registerCharPosition),
+	// 							new vscode.Position(registerLine, registerCharPosition)
+	// 						),
+	// 						` ${registerElement}`
+	// 					)
+	// 				];
+	// 			return item;
+	// 		}
+	// 		return [
+	// 			myitem(registerElement),
+	// 		];
+	// 	}
+	// })
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with  registerCommand
 	// The commandId parameter must match the command field in package.json
@@ -47,6 +94,7 @@ function activate(context) {
 	});
 
 	context.subscriptions.push(disposable);
+	// context.subscriptions.push(disposable2);
 }
 
 // This method is called when your extension is deactivated
