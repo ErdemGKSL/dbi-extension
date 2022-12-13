@@ -2,6 +2,11 @@
 
 ## [Released]
 
+### 0.0.5
+
+* Now you can import registirations from snippets via ctrl + space at the end of the register elements name!
+
+* On save, auto fixes registries.
 ### 0.0.4
 
 * More snippets

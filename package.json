@@ -2,7 +2,7 @@
   "name": "dbiaddon",
   "displayName": "DBI Addon",
   "description": "DBI Npm Module's Addon for snippets and setup.",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "icon": "icon.png",
   "engines": {
     "vscode": "^1.74.0"
@@ -15,7 +15,9 @@
     "name": "Erdem Göksel",
     "email": "zahrakon06@gmail.com"
   },
-  "activationEvents": [],
+  "activationEvents": [
+    "*"
+  ],
   "main": "./extension.js",
   "contributes": {
     "commands": [{

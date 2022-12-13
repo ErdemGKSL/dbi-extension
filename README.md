@@ -14,6 +14,8 @@ https://www.npmjs.com/package/@mostfeatured/dbi
 
 Users appreciate release notes as you update your extension.
 
-### 0.0.3
+### 0.0.5
 
-* More snippets
+* Now you can import registirations from snippets via ctrl + space at the end of the register elements name!
+
+* On save, auto fixes registries.

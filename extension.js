@@ -8,62 +8,83 @@ const path = require('path');
 const { request } = require('https');
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
-const registerElements = ["ChatInput"]
+const registerElements = ["ChatInput", "InteractionLocale", "Button", "SelectMenu", "MessageContextMenu", "UserContextMenu", "Modal", "Locale", "CustomEvent", "onUnload", "Event", "ChatInputOptions"];
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
 
-	// let disposable2 = vscode.languages.registerCompletionItemProvider("javascript", {
-	// 	resolveCompletionItem(item, token) {
-	// 		return item;
-	// 	},
+	context.subscriptions.push(vscode.workspace.onDidSaveTextDocument(async (document) => {
+		try {
+			if (document.languageId == "javascript") {
+				const current_path = document.uri.fsPath;
+				
+				let registerLine = -1;
+				
+				for (let i = 0; i < document.lineCount; i++) {
+					if (document.lineAt(i).text.includes(".register(({")) {
+						if (registerLine == -1) registerLine = i;
+						else return;
+					}
+				};
+				vscode.window.showInformationMessage(registerLine.toString());
+				if (registerLine == -1) { return; }
+				let content = document.getText();
+				let [registerContent] = document.lineAt(registerLine).text.match(/\.register\(\(\{[^)]*\}\)/);
+				vscode.window.showInformationMessage(registerContent.toString());
+				if (registerContent.includes("ChatInputOptions:")) return;
+				content = content.replace(registerContent, "~;REGISTERY~CONTENT~TEMPORARY;~");
+				const contentRegisterElements = registerElements.filter((element) => content.includes(element));
+				content = content.replace("~;REGISTERY~CONTENT~TEMPORARY;~", `.register(({ ${contentRegisterElements.join(", ")} })`);
+				await document.save();
+				setTimeout(async () => {
+					await fs.writeFile(current_path, content, "utf-8");
+				}, 300);
+			}
+		} catch (e) {}
 
-	// 	provideCompletionItems(document, position, token, context) {
-	// 		vscode.window.showInformationMessage("test");
-	// 		const linePrefix = document.lineAt(position).text.substring(0, position.character);
-	// 		let registerLine = -1;
-	// 		let registerCharPosition = -1;
-	// 		for (let i = 0; i < document.lineCount; i++) {
-	// 			if (document.lineAt(i).text.includes(".register({")) {
-	// 				registerLine = i;
-	// 				registerCharPosition = document.lineAt(i).text.indexOf(".register({") + 11;
-	// 				break;
-	// 			}
-	// 		}
-	// 		vscode.window.showInformationMessage(registerLine.toString());
-	// 		if (registerLine == -1) {
-	// 			return undefined;
-	// 		}
+	}));
 
-	// 		const registerElement = registerElements.find((element) => linePrefix.endsWith(`${element.toLowerCase()}`));
-	// 		vscode.window.showInformationMessage(registerElement);
-	// 		if (!registerElement) {
-	// 			return undefined;
-	// 		}
-	// 		let myitem = (text) => {
-	// 			let item = new vscode.CompletionItem(text, vscode.CompletionItemKind.Variable);
-	// 			if (!document.lineAt(registerLine).text.includes(registerElement))
-	// 				item.additionalTextEdits = [
-	// 					new vscode.TextEdit(
-	// 						new vscode.Range(
-	// 							new vscode.Position(registerLine, registerCharPosition),
-	// 							new vscode.Position(registerLine, registerCharPosition)
-	// 						),
-	// 						` ${registerElement}`
-	// 					)
-	// 				];
-	// 			return item;
-	// 		}
-	// 		return [
-	// 			myitem(registerElement),
-	// 		];
-	// 	}
-	// })
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with  registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('dbi.setup', async function () {
+
+
+	context.subscriptions.push(vscode.languages.registerCompletionItemProvider("javascript", {
+		provideCompletionItems(document, position) {
+			// const linePrefix = document.lineAt(position).text.substring(0, position.character);
+			let registerLine = -1;
+			let registerCharPosition = -1;
+			for (let i = 0; i < document.lineCount && i < position.line; i++) {
+				if (document.lineAt(i).text.includes(".register(({")) {
+					registerLine = i;
+					registerCharPosition = document.lineAt(i).text.indexOf(".register(({") + 12;
+				}
+			}
+			if (registerLine == -1) {
+				return undefined;
+			}
+
+			const currentRegisterElements = registerElements.filter((element) => !document.lineAt(registerLine).text.includes(element));
+
+			if (!currentRegisterElements.length) return undefined;
+			let myitem = (text, registerElement) => {
+				let item = new vscode.CompletionItem(text, vscode.CompletionItemKind.Reference);
+				if (!document.lineAt(registerLine).text.includes(registerElement))
+					item.additionalTextEdits = [
+						new vscode.TextEdit(
+							new vscode.Range(
+								new vscode.Position(registerLine, registerCharPosition),
+								new vscode.Position(registerLine, registerCharPosition)
+							),
+							` ${registerElement},`
+						)
+					];
+					item.detail = "dbi registiration import";
+				return item;
+			};
+			return currentRegisterElements.map(x => myitem(x,x));
+		}
+	}))
+
+	context.subscriptions.push(vscode.commands.registerCommand('dbi.setup', async function () {
 		// The code you place here will be executed every time your command is executed
 
 		// Display a message box to the user
@@ -91,10 +112,7 @@ function activate(context) {
 			vscode.window.showInformationMessage("DBI: Something went wrong, please open a workspace if you didn't already.");
 			vscode.window.showErrorMessage(error.toString());
 		}
-	});
-
-	context.subscriptions.push(disposable);
-	// context.subscriptions.push(disposable2);
+	}));
 }
 
 // This method is called when your extension is deactivated
