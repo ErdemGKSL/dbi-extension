@@ -50,15 +50,32 @@ function activate(context) {
 			// const linePrefix = document.lineAt(position).text.substring(0, position.character);
 			let registerLine = -1;
 			let registerCharPosition = -1;
+			
 			for (let i = 0; i < document.lineCount && i < position.line; i++) {
 				if (document.lineAt(i).text.includes(".register(({")) {
 					registerLine = i;
 					registerCharPosition = document.lineAt(i).text.indexOf(".register(({") + 12;
 				}
 			}
+
 			if (registerLine == -1) {
 				return undefined;
 			}
+
+			let registerEndLine = -1;
+			let bracketSize = 0;
+
+			for (let i = registerLine; i < document.lineCount && i < position.line; i++) {
+				bracketSize += document.lineAt(i).text.split("{").length - 1;
+				bracketSize -= document.lineAt(i).text.split("}").length - 1;
+				if (bracketSize == 0) {
+					registerEndLine = i;
+					break;
+				}
+			}
+
+			if (registerEndLine != -1) return undefined;
+			if (bracketSize != 1) return undefined;
 
 			const currentRegisterElements = registerElements.filter((element) => !document.lineAt(registerLine).text.match(new RegExp(`[, {]${element}[, }]`)));
 
