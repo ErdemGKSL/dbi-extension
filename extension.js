@@ -93,7 +93,7 @@ function activate(context) {
 			await fs.mkdir(path.resolve(current_path, "./src"), { recursive: true });
 
 			for (
-				let arr = ["package.json", "index.js", "types.js", "dbi.js", "config.json", "bundler.js", ".gitignore"],
+				let arr = ["package.json", "index.js", "types.js", "dbi.js", "config.json", "bundler.js", ".gitignore", "publish.js"],
 				i = 0; i < arr.length; i++
 			) {
 				const nURL = BASE_URL + arr[i];
